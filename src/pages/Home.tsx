@@ -10,24 +10,38 @@ export default function Home() {
   const heroItems = [
     {
       id: '1',
-      image: 'https://picsum.photos/seed/hero1/1920/1080',
-      title: 'Step Into Luxury',
-      subtitle: 'Premium Leather Collection',
-      link: '/category/Men?sub=Formal Shoes'
+      image: 'https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHNob2VzfGVufDB8MHwwfHx8MA%3D%3D',
+      title: 'Step Into Sneaker',
+      subtitle: 'Premium Leather Sneakers',
+      link: '/category/Men?sub=Sneakers'
     },
     {
       id: '2',
-      image: 'https://picsum.photos/seed/hero2/1920/1080',
-      title: 'Performance Redefined',
-      subtitle: 'Sports & Running Series',
-      link: '/category/Men?sub=Sports Shoes'
+      image: 'https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGhlZWxzfGVufDB8MHwwfHx8MA%3D%3D',
+      title: 'Heels on your high',
+      subtitle: 'High Heels & Sandal',
+      link: '/category/Women?sub=Party Sandals'
     },
     {
       id: '3',
-      image: 'https://picsum.photos/seed/hero3/1920/1080',
-      title: 'Traditional Elegance',
-      subtitle: 'Festive Jutis & Mojaris',
-      link: '/category/Women?sub=Mojaris'
+      image: 'https://images.unsplash.com/photo-1542838776-096d877b5aa2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Ym9vdHN8ZW58MHwwfDB8fHww',
+      title: 'Traditional Elegance with Boots',
+      subtitle: 'Festive Jutis & Boots',
+      link: '/category/Men?sub=Boots'
+    },
+    {
+      id: '4',
+      image: 'https://images.unsplash.com/photo-1638859436319-662beea3bfa8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNhbmRhbHN8ZW58MHwwfDB8fHww',
+      title: 'Premium Sandals',
+      subtitle: 'Make your girl happy',
+      link: '/category/Women?sub=Sandals'
+    },
+    {
+      id: '4',
+      image: 'https://plus.unsplash.com/premium_photo-1663133673435-4def120fcd8f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmxpcCUyMGZsb3BzfGVufDB8MHwwfHx8MA%3D%3D',
+      title: 'Easy to use',
+      subtitle: 'Pick your Flip Flops',
+      link: '/category/Women?sub=Flip Flops'
     },
   ];
 
@@ -77,9 +91,9 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { name: 'Men', img: 'https://picsum.photos/seed/men/800/1000', count: '120+ Products' },
-            { name: 'Women', img: 'https://picsum.photos/seed/women/800/1000', count: '80+ Products' },
-            { name: 'Kids', img: 'https://picsum.photos/seed/kids/800/1000', count: '50+ Products' },
+            { name: 'Men', img: 'https://images.unsplash.com/photo-1621996659546-b0dd8b7e57af?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWVucyUyMHNob2VzfGVufDB8fDB8fHww', count: '120+ Products' },
+            { name: 'Women', img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGlnaCUyMGhlZWx8ZW58MHx8MHx8fDA%3D', count: '80+ Products' },
+            { name: 'Kids', img: 'https://plus.unsplash.com/premium_photo-1669644856868-6613f6683346?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8a2lkcyUyMHNob2VzfGVufDB8fDB8fHww', count: '50+ Products' },
           ].map((cat, i) => (
             <Link
               key={cat.name}
