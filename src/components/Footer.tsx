@@ -52,11 +52,11 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-gray-400">
               <li className="flex items-start">
                 <MapPin className="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0" />
-                <span>MANPASAND, Dr. Rajendra Prasad Road, Bhagalpur, Bihar – 812002, India</span>
+                <span>MANPASAND, Footwear Chowk, Muzaffarpur, Bihar – 842001, India</span>
               </li>
               <li className="flex items-center">
                 <Phone className="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0" />
-                <span>+91 9955509927</span>
+                <span>+91 9873456XXX</span>
               </li>
               <li className="flex items-center">
                 <Mail className="w-5 h-5 mr-3 text-emerald-400 flex-shrink-0" />

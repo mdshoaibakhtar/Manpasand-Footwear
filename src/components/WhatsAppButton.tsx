@@ -3,7 +3,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export default function WhatsAppButton() {
-  const phoneNumber = '919955509927';
+  const phoneNumber = '919873456XXX';
   const message = 'Hello Manpasand Shoes, I would like to inquire about your footwear collection.';
   
   const handleClick = () => {
