@@ -3,17 +3,31 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Heart, User, Search, Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { CATEGORIES } from '../data';
+import { useStore } from '../StoreContext';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
+  const { cart, wishlist } = useStore();
 
   const navItems = [
     { label: 'Men', path: '/category/Men' },
     { label: 'Women', path: '/category/Women' },
     { label: 'Kids', path: '/category/Kids' },
   ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
+
+  const totalCartItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
@@ -31,12 +45,10 @@ export default function Navbar() {
               <div
                 key={item.label}
                 className="relative group"
-                onMouseEnter={() => setActiveCategory(item.label)}
-                onMouseLeave={() => setActiveCategory(null)}
               >
                 <Link
                   to={item.path}
-                  className="flex items-center text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors"
+                  className="flex items-center text-sm font-medium text-gray-700 hover:text-emerald-600 transition-colors py-4"
                 >
                   {item.label}
                   <ChevronDown className="ml-1 w-4 h-4" />
@@ -71,20 +83,51 @@ export default function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center space-x-4">
-            <button className="p-2 text-gray-600 hover:text-emerald-600 transition-colors">
-              <Search className="w-5 h-5" />
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="p-2 text-gray-600 hover:text-emerald-600 transition-colors"
+              >
+                <Search className="w-5 h-5" />
+              </button>
+              
+              {isSearchOpen && (
+                <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-100 shadow-xl rounded-2xl p-4 z-50">
+                  <form onSubmit={handleSearch} className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search for shoes..."
+                      className="flex-1 text-sm border border-gray-100 rounded-xl px-4 py-2 focus:outline-none focus:border-emerald-600"
+                      autoFocus
+                    />
+                    <button type="submit" className="bg-emerald-600 text-white p-2 rounded-xl">
+                      <Search className="w-4 h-4" />
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+            
             <Link to="/profile" className="p-2 text-gray-600 hover:text-emerald-600 transition-colors">
               <User className="w-5 h-5" />
             </Link>
-            <Link to="/wishlist" className="p-2 text-gray-600 hover:text-emerald-600 transition-colors">
+            <Link to="/wishlist" className="p-2 text-gray-600 hover:text-emerald-600 transition-colors relative">
               <Heart className="w-5 h-5" />
+              {wishlist.length > 0 && (
+                <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
             </Link>
             <Link to="/cart" className="p-2 text-gray-600 hover:text-emerald-600 transition-colors relative">
               <ShoppingCart className="w-5 h-5" />
-              <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                0
-              </span>
+              {totalCartItems > 0 && (
+                <span className="absolute top-1 right-1 bg-emerald-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                  {totalCartItems}
+                </span>
+              )}
             </Link>
             
             {/* Mobile Menu Button */}

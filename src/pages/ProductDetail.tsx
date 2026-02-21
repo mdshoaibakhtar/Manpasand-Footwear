@@ -8,10 +8,12 @@ import {
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'motion/react';
+import { useStore } from '../StoreContext';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
   const product = MOCK_PRODUCTS.find(p => p.id === id);
+  const { addToCart, toggleWishlist, isInWishlist } = useStore();
   
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -25,6 +27,14 @@ export default function ProductDetail() {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+    addToCart(product, selectedSize, quantity);
+  };
 
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
 
@@ -147,12 +157,21 @@ export default function ProductDetail() {
                   <Plus className="w-4 h-4" />
                 </button>
               </div>
-              <button className="flex-1 flex items-center justify-center space-x-3 bg-emerald-600 text-white py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200">
+              <button 
+                onClick={handleAddToCart}
+                className="flex-1 flex items-center justify-center space-x-3 bg-emerald-600 text-white py-4 rounded-2xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200"
+              >
                 <ShoppingCart className="w-5 h-5" />
                 <span>Add to Cart</span>
               </button>
-              <button className="p-4 border-2 border-gray-100 rounded-2xl hover:border-red-100 hover:bg-red-50 hover:text-red-500 transition-all">
-                <Heart className="w-6 h-6" />
+              <button 
+                onClick={() => toggleWishlist(product.id)}
+                className={cn(
+                  "p-4 border-2 rounded-2xl transition-all",
+                  isInWishlist(product.id) ? "border-red-100 bg-red-50 text-red-500" : "border-gray-100 hover:border-red-100 hover:bg-red-50 hover:text-red-500"
+                )}
+              >
+                <Heart className={cn("w-6 h-6", isInWishlist(product.id) && "fill-current")} />
               </button>
             </div>
           </div>

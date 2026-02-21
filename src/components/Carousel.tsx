@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface CarouselProps {
   items: {
@@ -9,6 +10,7 @@ interface CarouselProps {
     image: string;
     title?: string;
     subtitle?: string;
+    link?: string;
   }[];
   autoPlay?: boolean;
   interval?: number;
@@ -16,6 +18,7 @@ interface CarouselProps {
 
 export default function Carousel({ items, autoPlay = true, interval = 5000 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!autoPlay) return;
@@ -68,6 +71,7 @@ export default function Carousel({ items, autoPlay = true, interval = 5000 }: Ca
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
+              onClick={() => items[currentIndex].link && navigate(items[currentIndex].link)}
               className="bg-white text-gray-900 px-8 py-3 rounded-full font-bold text-sm hover:bg-emerald-500 hover:text-white transition-all"
             >
               Shop Collection

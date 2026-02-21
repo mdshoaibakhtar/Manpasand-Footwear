@@ -13,18 +13,21 @@ export default function Home() {
       image: 'https://picsum.photos/seed/hero1/1920/1080',
       title: 'Step Into Luxury',
       subtitle: 'Premium Leather Collection',
+      link: '/category/Men?sub=Formal Shoes'
     },
     {
       id: '2',
       image: 'https://picsum.photos/seed/hero2/1920/1080',
       title: 'Performance Redefined',
       subtitle: 'Sports & Running Series',
+      link: '/category/Men?sub=Sports Shoes'
     },
     {
       id: '3',
       image: 'https://picsum.photos/seed/hero3/1920/1080',
       title: 'Traditional Elegance',
       subtitle: 'Festive Jutis & Mojaris',
+      link: '/category/Women?sub=Mojaris'
     },
   ];
 

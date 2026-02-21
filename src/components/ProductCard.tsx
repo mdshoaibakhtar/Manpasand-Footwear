@@ -4,6 +4,7 @@ import { Heart, ShoppingCart, Star } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Product } from '../types';
 import { cn } from '../lib/utils';
+import { useStore } from '../StoreContext';
 
 interface ProductCardProps {
   product: Product;
@@ -11,7 +12,20 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { toggleWishlist, isInWishlist, addToCart } = useStore();
   const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product, product.sizes[0], 1);
+  };
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist(product.id);
+  };
 
   return (
     <motion.div
@@ -42,10 +56,19 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Quick Actions */}
         <div className="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300">
-          <button className="p-2 bg-white rounded-full shadow-md hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 transition-colors">
-            <Heart className="w-4 h-4" />
+          <button 
+            onClick={handleWishlist}
+            className={cn(
+              "p-2 rounded-full shadow-md transition-colors",
+              isInWishlist(product.id) ? "bg-red-500 text-white" : "bg-white text-gray-600 hover:bg-emerald-50 hover:text-emerald-600"
+            )}
+          >
+            <Heart className={cn("w-4 h-4", isInWishlist(product.id) && "fill-current")} />
           </button>
-          <button className="p-2 bg-white rounded-full shadow-md hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 transition-colors">
+          <button 
+            onClick={handleAddToCart}
+            className="p-2 bg-white rounded-full shadow-md hover:bg-emerald-50 text-gray-600 hover:text-emerald-600 transition-colors"
+          >
             <ShoppingCart className="w-4 h-4" />
           </button>
         </div>

@@ -9,6 +9,8 @@ import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
+import Search from './pages/Search';
+import Wishlist from './pages/Wishlist';
 import { useEffect } from 'react';
 
 function ScrollToTop() {
@@ -34,7 +36,8 @@ export default function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/wishlist" element={<ProductListing />} /> {/* Reuse for now */}
+            <Route path="/search" element={<Search />} />
+            <Route path="/wishlist" element={<Wishlist />} />
           </Routes>
         </main>
 

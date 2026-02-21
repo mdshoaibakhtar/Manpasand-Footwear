@@ -1,21 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, ShieldCheck } from 'lucide-react';
-import { MOCK_PRODUCTS } from '../data';
 import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
+import { useStore } from '../StoreContext';
 
 export default function Cart() {
-  // Mock cart data
-  const cartItems = [
-    { ...MOCK_PRODUCTS[0], selectedSize: '9', quantity: 1 },
-  ];
+  const { cart, removeFromCart, updateCartQuantity, clearCart } = useStore();
 
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const shipping = subtotal > 999 ? 0 : 99;
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const shipping = subtotal > 999 || cart.length === 0 ? 0 : 99;
   const total = subtotal + shipping;
 
-  if (cartItems.length === 0) {
+  if (cart.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-24 flex flex-col items-center justify-center text-center space-y-6">
         <div className="p-8 bg-gray-50 rounded-full">
@@ -34,12 +31,20 @@ export default function Cart() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-12">Shopping Cart</h1>
+      <div className="flex items-center justify-between mb-12">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Shopping Cart</h1>
+        <button 
+          onClick={clearCart}
+          className="text-sm font-bold text-red-500 hover:underline"
+        >
+          Clear Cart
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Cart Items */}
         <div className="lg:col-span-2 space-y-6">
-          {cartItems.map((item) => (
+          {cart.map((item) => (
             <motion.div
               layout
               key={`${item.id}-${item.selectedSize}`}
@@ -55,18 +60,31 @@ export default function Cart() {
                     <h3 className="text-sm md:text-base font-bold text-gray-900">{item.name}</h3>
                     <p className="text-xs text-gray-500 font-medium mt-1">Size: {item.selectedSize}</p>
                   </div>
-                  <button className="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                  <button 
+                    onClick={() => removeFromCart(item.id, item.selectedSize)}
+                    className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                  >
                     <Trash2 className="w-5 h-5" />
                   </button>
                 </div>
                 
                 <div className="flex items-center justify-between pt-2">
                   <div className="flex items-center border border-gray-100 rounded-lg p-1">
-                    <button className="p-1 hover:bg-gray-50 rounded transition-colors"><Minus className="w-3 h-3" /></button>
+                    <button 
+                      onClick={() => updateCartQuantity(item.id, item.selectedSize, item.quantity - 1)}
+                      className="p-1 hover:bg-gray-50 rounded transition-colors"
+                    >
+                      <Minus className="w-3 h-3" />
+                    </button>
                     <span className="w-8 text-center text-sm font-bold">{item.quantity}</span>
-                    <button className="p-1 hover:bg-gray-50 rounded transition-colors"><Plus className="w-3 h-3" /></button>
+                    <button 
+                      onClick={() => updateCartQuantity(item.id, item.selectedSize, item.quantity + 1)}
+                      className="p-1 hover:bg-gray-50 rounded transition-colors"
+                    >
+                      <Plus className="w-3 h-3" />
+                    </button>
                   </div>
-                  <span className="text-lg font-bold text-gray-900">₹{item.price.toLocaleString()}</span>
+                  <span className="text-lg font-bold text-gray-900">₹{(item.price * item.quantity).toLocaleString()}</span>
                 </div>
               </div>
             </motion.div>
